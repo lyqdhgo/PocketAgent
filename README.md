@@ -205,17 +205,6 @@ REST 请求构造与响应解析（Mock 网络）、Agent 工具闭环/未知工
 
 ---
 
-## ☁️ 上传到个人 GitHub
-
-```bash
-cd D:\Workspace\agent
-git init -b main
-git add .
-git commit -m "feat: PocketAgent 多智能体项目（自研 ReAct + Planner/Worker 编排）"
-git branch -M main
-git remote add origin https://github.com/<你的用户名>/<仓库名>.git   # 仓库名建议如 pocket-agent
-git push -u origin main
-```
 
 建议：把本目录改名为 `pocket-agent` 之类有辨识度的仓库名；`.env` 已在 `.gitignore` 中，**切勿提交真实 Key**。
 
