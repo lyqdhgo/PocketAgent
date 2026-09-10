@@ -1,0 +1,10 @@
+# ============ PocketAgent 依赖说明 ============
+# 核心包（pocketagent/）与单元测试仅使用 Python 标准库，零第三方依赖；
+# examples/demo_mock.py 也可以零依赖直接运行。
+
+# 1) 图形界面（Gradio，推荐安装；启动 `python -m pocketagent.gui`）
+#    GUI 代码适配 Gradio 6.x（Chatbot 为 messages 模式）
+gradio>=6.0
+
+# 2) 可选工具增强：Wikipedia 检索（不装时该工具会提示安装，不影响其它功能）
+# wikipedia>=1.4
