@@ -1,4 +1,21 @@
+<div align="center">
+
 # 🧩 PocketAgent
+
+**自研 ReAct 工具调用循环 + Planner / Worker / Reporter 多智能体团队编排**
+
+[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![MIT](https://img.shields.io/badge/License-MIT-3DA639?style=flat-square)](./LICENSE)
+[![零依赖](https://img.shields.io/badge/核心-零第三方依赖-22C55E?style=flat-square)](#第一步零依赖离线跑通无需安装任何第三方库无需-api-key)
+[![测试](https://img.shields.io/badge/测试-31%20passed-3FB950?style=flat-square)](#-测试)
+[![无 Key 可跑](https://img.shields.io/badge/无需%20API%20Key-即可完整演示-8B5CF6?style=flat-square)](#第一步零依赖离线跑通无需安装任何第三方库无需-api-key)
+[![Gradio](https://img.shields.io/badge/GUI-Gradio-FF7C00?style=flat-square&logo=gradio&logoColor=white)](#第三步启动图形界面)
+
+[快速开始](#-快速开始) · [架构总览](#️-架构总览) · [设计亮点](#-设计亮点面试讲解重点) · [测试](#-测试) · [后续规划](#️-后续规划可向面试官展开的-roadmap) · [FAQ](#-faq--排错)
+
+</div>
+
+---
 
 **面试展示级的多智能体（AI Agent）项目** —— 自研 ReAct 工具调用循环 + Planner / Worker / Reporter 团队编排，开箱即跑：**零第三方依赖的核心、无 API Key 也能完整演示、单元测试齐全、带 Gradio 图形界面**，兼容 DeepSeek / OpenAI / Ollama 等任意 OpenAI 格式的模型服务。
 
@@ -13,7 +30,7 @@
 ### 第一步：零依赖离线跑通（无需安装任何第三方库、无需 API Key）
 
 ```bash
-cd D:\Workspace\agent            # 你的项目目录
+cd PocketAgent                    # 你的项目目录
 python examples/demo_mock.py
 ```
 
@@ -206,7 +223,7 @@ REST 请求构造与响应解析（Mock 网络）、Agent 工具闭环/未知工
 ---
 
 
-建议：把本目录改名为 `pocket-agent` 之类有辨识度的仓库名；`.env` 已在 `.gitignore` 中，**切勿提交真实 Key**。
+> `.env` 已在 `.gitignore` 中，**切勿提交真实 Key**。
 
 ---
 
