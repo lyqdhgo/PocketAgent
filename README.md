@@ -10,6 +10,7 @@
 [![测试](https://img.shields.io/badge/测试-31%20passed-3FB950?style=flat-square)](#-测试)
 [![无 Key 可跑](https://img.shields.io/badge/无需%20API%20Key-即可完整演示-8B5CF6?style=flat-square)](#第一步零依赖离线跑通无需安装任何第三方库无需-api-key)
 [![Gradio](https://img.shields.io/badge/GUI-Gradio-FF7C00?style=flat-square&logo=gradio&logoColor=white)](#第三步启动图形界面)
+[![CI](https://img.shields.io/github/actions/workflow/status/lyqdhgo/PocketAgent/ci.yml?style=flat-square&label=CI)](https://github.com/lyqdhgo/PocketAgent/actions/workflows/ci.yml)
 
 [快速开始](#-快速开始) · [架构总览](#️-架构总览) · [设计亮点](#-设计亮点面试讲解重点) · [测试](#-测试) · [后续规划](#️-后续规划可向面试官展开的-roadmap) · [FAQ](#-faq--排错)
 

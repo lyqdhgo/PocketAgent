@@ -1,0 +1,88 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+# The suite only reads. A token that can write is a token a dependency's install
+# script could abuse.
+permissions:
+  contents: read
+
+concurrency:
+  # Superseded pull-request runs are wasted work; superseded runs on main are
+  # history, and a cancelled run there reads as a failure to anyone watching.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  # The tools print Chinese and the demo prints emoji. A Windows runner without
+  # this encodes stdout as cp1252 and raises UnicodeEncodeError from inside the
+  # printing code, which buries the assertion that actually failed.
+  PYTHONUTF8: "1"
+
+jobs:
+  test:
+    name: ${{ matrix.os }} - Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    strategy:
+      # Every cell is a real answer. Cancelling the others on the first failure
+      # would hide, for instance, that something breaks only on 3.9.
+      fail-fast: false
+      matrix:
+        include:
+          # 3.9 is the floor pyproject.toml and the README both promise.
+          - os: ubuntu-24.04
+            python: "3.9"
+          - os: ubuntu-24.04
+            python: "3.11"
+          - os: ubuntu-24.04
+            python: "3.12"
+          # The project is developed on Windows; envfile.py and the CLI read and
+          # write files, so the Windows path handling deserves a cell.
+          - os: windows-2025
+            python: "3.11"
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python }}
+
+      # Pinned runners still drift, so record what actually ran.
+      - name: Interpreter
+        run: python -V
+
+      # Deliberately no `pip install -r requirements.txt`. That file has one
+      # active line - `gradio>=6.0` for the optional GUI - and installing it
+      # would add minutes to every run while gradio 6 requires Python >= 3.10,
+      # which would break the 3.9 cell outright. Nothing below imports it:
+      # `pocketagent/__init__.py` does not pull in `gui`, and no test touches it.
+      # The tests need no dependencies at all.
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t . -v
+
+      # The zero-dependency demo, run for real. It exercises the ReAct loop and
+      # the Planner/Worker/Reporter team against a mock model, which the unit
+      # tests only cover piecewise.
+      - name: Smoke test - offline demo
+        run: python examples/demo_mock.py
+
+  # One required status check, so branch protection does not have to be updated
+  # every time the matrix gains a dimension.
+  ci_ok:
+    name: ci-ok
+    needs: [test]
+    # Without `always()` a failed dependency makes this job `skipped`, and a
+    # skipped required check does not report success - the pull request just
+    # hangs with no red X explaining why.
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Verify every job succeeded
+        run: |
+          echo "test: ${{ needs.test.result }}"
+          test "${{ needs.test.result }}" = "success"
